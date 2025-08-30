@@ -1,14 +1,15 @@
 pipeline {
     agent any
-
-    stages {
-        agent {
-            docker {
-                image 'node:18-apline'
-                reuseNode true 
-            }
-        }
+    
+    stages{
+            
         stage('build') {
+            agent {
+                docker {
+                    image 'node:18-apline'
+                    reuseNode true 
+                }
+            }
             steps {
                 sh '''
                     ls -la 
@@ -22,3 +23,4 @@ pipeline {
         }
     }
 }
+

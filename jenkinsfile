@@ -80,7 +80,7 @@ pipeline {
 
 
 
-        stage('Deploy') {
+        stage('Deploy staging ') {
             agent {
                 docker {
                     image 'node:18-alpine'
@@ -89,7 +89,26 @@ pipeline {
             }
             steps {
                 sh '''
-                    echo 'start deploying' 
+                    echo 'Deploying to staging' 
+                    npm install netlify-cli
+                    node_modules/.bin/netlify
+                    node_modules/.bin/netlify status
+                    node_modules/.bin/netlify deploy --dir=build  --no-build 
+
+                '''
+            }
+        }
+
+        stage('Deploy prod') {
+            agent {
+                docker {
+                    image 'node:18-alpine'
+                    reuseNode true 
+                }
+            }
+            steps {
+                sh '''
+                    echo 'Deploying to prod' 
                     npm install netlify-cli
                     node_modules/.bin/netlify
                     node_modules/.bin/netlify status
@@ -98,6 +117,10 @@ pipeline {
                 '''
             }
         }
+
+
+
+
     }
  
 }

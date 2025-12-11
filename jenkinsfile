@@ -89,6 +89,8 @@ pipeline {
             }
             steps {
                 sh '''
+                   
+                    npm config set python /usr/bin/python3
                     echo 'Deploying to staging' 
                     npm install netlify-cli   node-jq
                     node_modules/.bin/netlify
